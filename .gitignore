@@ -1,0 +1,8 @@
+multimodal_dataset/
+PAPER.md
+plan.md
+.venv
+DATA_FLOW.md
+.DS_Store
+HYPERPARAMETER_SEARCH_GUIDE.md
+IMPLEMENTATION_SUMMARY.md
