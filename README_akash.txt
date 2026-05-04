@@ -45,6 +45,7 @@ akash_project2_code/
     checkpoints/                      # folder containing epoch 50, epoch 100, and best model .pt files
     test_integration.py               # file required to run a quick end to end pipeline check test to ensure data goes through architecture and is good for training
     train.py                          # file required to perform training as it contains metric calculation and args for training function
+    test.py                           # file required to run evaluation of best model checkpoint on test set
     hyperparameter_search.py          # file required to run optuna-led hyperparameter tuning as it contains hyperparameter search implementation
     dataset.py                        # file required for data loaders of dataset to model for training
     config.py                         # file required containing quantitative information to perform augmentations, set training parameters, etc.
@@ -106,11 +107,10 @@ So all that matters for requirements is to just open train.ipynb file and follow
 
 Command to run testing:
 ```
-python test.py \
-  --data_root data \
-  --ckpt models/best_model.pth \
-  --batch_size 64 \
-  --device cuda:0
+!python test.py --checkpoint ./checkpoints/best_model.pt \
+               --data-root ../multimodal_dataset \
+               --device cuda \
+               --batch-size 8
 ```
 
 ------------------------------------------------------------
@@ -119,19 +119,18 @@ python test.py \
 
 Command to run training:
 ```
-python train.py \
-  --data_root data \
-  --epochs 50 \
-  --batch_size 128 \
-  --lr 0.001 \
-  --device cuda:0 \
-  --out_dir outputs/
+!python train.py \
+  --batch-size 8 \
+  --num-epochs 100 \
+  --lr-init 1.0e-06 \
+  --lr-max 1.4e-05 \
+  --lr-min 8.69e-10 \
+  --warmup-epochs 15 \
+  --weight-decay 5.164e-03 \
+  --poly-power 0.972299 \
+  --dropout-p 0.079453 \
+  --device cuda
 ```
-
-Optional arguments (if supported):
-- `--resume`
-- `--save_every`
-- `--seed`
 
 ------------------------------------------------------------
 
